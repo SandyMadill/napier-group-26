@@ -21,8 +21,8 @@ jobs:
       - name: Build with Maven
         run: mvn package
       - name: Build
-        run: docker build -t group26 .
+        run: docker build -t group_26 .
       - name: Run image
-        run: docker run --network group26 --name semcontainer group_26
+        run: docker run --network group26 --name semgacontainer group_26
       - name: view logs
-        run: docker logs semcontainer
+        run: docker logs semgacontainer
