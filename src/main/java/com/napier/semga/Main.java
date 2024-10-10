@@ -7,6 +7,10 @@ import org.bson.Document;
 
 public class Main
 {
+    /***
+     * This is just testing that the app can connect to the mongo db server
+     * @param args
+     */
     public static void main(String[] args)
     {
         // Connect to MongoDB
