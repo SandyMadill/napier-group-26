@@ -1,0 +1,45 @@
+## Country Reports
+1. **As a organisation member, I want to view all countries in the world, organized by population, from largest to smallest, so I can understand global population distribution.**
+2. **As a organisation member, I want to view all countries in a continent, organized by population, from largest to smallest, so I can analyze population trends within specific continents.**
+3. **As a organisation member, I want to view all countries in a region, organized by population, from largest to smallest, so I can focus on specific regional population trends.**
+4. **As a organisation member, I want to see the top N populated countries in the world, where N is provided by me, so I can quickly identify the most populous countries.**
+5. **As a organisation member, I want to see the top N populated countries in a continent, where N is provided by me, so I can compare the largest populations within a specific continent.**
+6. **As a organisation member, I want to see the top N populated countries in a region, where N is provided by me, to focus in on the most populous countries within a region.**
+
+## City Reports
+1. **As a organisation member, I want to view all cities in the world, organized by population, from largest to smallest, so I can understand urban population distribution globally.**
+2. **As a organisation member, I want to view all cities in a continent, organized by population, from largest to smallest, so I can analyze population trends within specific continents.**
+3. **As a organisation member, I want to view all cities in a region, organized by population, from largest to smallest, to focus on specific regional urban trends.**
+4. **As a organisation member, I want to view all cities in a country, organized by population, from largest to smallest, to see how population is spread across urban areas within a country.**
+5. **As a organisation member, I want to view all cities in a district, organized by population, from largest to smallest, for detailed local population insights.**
+6. **As a organisation member, I want to see the top N populated cities in the world, where N is provided by me, so I can quickly identify the largest urban populations globally.**
+7. **As a organisation member, I want to see the top N populated cities in a continent, where N is provided by me, so I can compare the largest urban populations within a specific continent.**
+8. **As a organisation member, I want to see the top N populated cities in a region, where N is provided by me, to identify key urban areas within a region.**
+9. **As a organisation member, I want to see the top N populated cities in a country, where N is provided by me, to understand the most significant urban areas in that country.**
+10. **As a organisation member, I want to see the top N populated cities in a district, where N is provided by me, to get a detailed view of urban areas at a local level.**
+
+## Capital City Reports
+1. **As a organisation member, I want to view all capital cities in the world, organized by population, from largest to smallest, so I can understand the distribution of population in capital cities globally.**
+2. **As a organisation member, I want to view all capital cities in a continent, organized by population, from largest to smallest, to analyze capital city populations within a continent.**
+3. **As a organisation member, I want to view all capital cities in a region, organized by population, from largest to smallest, to focus on regional capital city trends.**
+4. **As a organisation member, I want to see the top N populated capital cities in the world, where N is provided by me, to quickly identify the most populous capital cities globally.**
+5. **As a organisation member, I want to see the top N populated capital cities in a continent, where N is provided by me, to compare the largest capital city populations within a specific continent.**
+6. **As a organisation member, I want to see the top N populated capital cities in a region, where N is provided by me, to identify the key capital cities within a region.**
+
+## Population Reports
+1. **As a organisation member, I want to see the population of people living in cities and not living in cities in each continent, so I can compare urban and rural population distributions across continents.**
+2. **As a organisation member, I want to see the population of people living in cities and not living in cities in each region, to understand the distribution of populations at a regional level.**
+3. **As a organisation member, I want to see the population of people living in cities and not living in cities in each country, so I can compare urban and rural populations within specific countries.**
+4. **As a organisation member, I want to access the population of the world, to understand the overall human population size globally.**
+5. **As a organisation member, I want to access the population of a continent, to see population data for specific continents.**
+6. **As a organisation member, I want to access the population of a region, to see regional population data.**
+7. **As a organisation member, I want to access the population of a country, to understand the population size of specific countries.**
+8. **As a organisation member, I want to access the population of a district, for detailed local population data.**
+9. **As a organisation member, I want to access the population of a city, to understand the population sizes of specific urban areas.**
+
+## Database
+1. **As a user, I want to query the population database so I can retrieve relevant data for the reports.**
+
+## Language Reports
+1. **As a organisation member, I want to know the number of people who speak Chinese, English, Hindi, Spanish, and Arabic, organized by the greatest number to smallest, to understand the distribution of language globally globally.**
+2. **As a organisation member, I want to see the percentage of the world population that speaks Chinese, English, Hindi, Spanish, and Arabic, to understand how widely these languages are spoken.**
