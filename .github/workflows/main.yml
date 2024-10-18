@@ -1,9 +1,9 @@
-name: A workflow for my Hello World App
+name: A workflow for napier group 26s app
 on: push
 
 jobs:
   build:
-    name: Hello world action
+    name: Group 26 Action
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -20,9 +20,5 @@ jobs:
           docker run -d --name mongo-dbserver --network group26 mongo
       - name: Build with Maven
         run: mvn package
-      - name: Build
-        run: docker build -t group_26 .
-      - name: Run image
-        run: docker run --network group26 --name semgacontainer group_26
-      - name: view logs
-        run: docker logs semgacontainer
+      - name: Run Docker Compose
+        run: docker compose up --abort-on-container-exit
