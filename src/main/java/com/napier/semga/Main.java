@@ -1,6 +1,7 @@
 package com.napier.semga;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Main
 {
@@ -73,6 +74,56 @@ public class Main
             catch (Exception e)
             {
                 System.out.println("Error closing connection to database");
+            }
+        }
+    }
+
+    /***
+     * Prints a list of cities
+     * @param cities the list of cities to be printed
+     */
+    public  void printCities(ArrayList<City> cities){
+        //  check if cities is null
+        if (cities == null){
+            System.out.println("No cities found");
+        }
+        else{
+            //  print header
+            System.out.println(String.format("%-10s %-20s %-10s %-20s", "Id", "Name", "Country Code", "Population"));
+
+            //  print cities
+            for (City city : cities){
+                if (city == null){
+                    continue;
+                }
+                else {
+                    System.out.println(String.format("%-10s %-20s %-10s %-20s", city.id, city.name, city.countryCode, city.population));
+                }
+            }
+        }
+    }
+
+    /***
+     * Prints a list of countries
+     * @param countries the list of countries to be printed
+     */
+    public  void printCountries(ArrayList<Country> countries){
+        //  check if countries is null
+        if (countries == null){
+            System.out.println("No cities found");
+        }
+        else{
+            //  print header
+            System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", "Code", "Name", "Continent", "Region", "Population", "LifeExpectancy", "GNP", "GNP(old)", "localName", "Government Form", "Head Of State", "Capital", "Code 2"));
+
+            //  print countries
+            for (Country country : countries){
+                if (country == null){
+                    continue;
+                }
+                else {
+                    System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", country.code, country.name, country.continent, country.region, country.population, country.lifeExpectancy, country.gnp, country.gnpOld, country.localName, country.governmentForm, country.headOfState, country.capital, country.code2));
+                }
             }
         }
     }
