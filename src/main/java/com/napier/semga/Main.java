@@ -14,6 +14,10 @@ public class Main
         Main m = new Main();
 
         m.connect();
+
+        ArrayList<Country> countries = m.getAllCountries();
+
+        m.printCountries(countries);
     }
 
     /**
@@ -104,13 +108,58 @@ public class Main
     }
 
     /***
+     * gets all the countries from the database
+     * @return array list containing countries
+     */
+    public ArrayList<Country> getAllCountries(){
+        try {
+            ArrayList<Country> countries = new ArrayList<Country>();
+            Statement stmt = con.createStatement();
+
+            String strSelect = "SELECT * FROM country " +
+                    "ORDER BY country.Population DESC";
+
+            ResultSet rslt = stmt.executeQuery(strSelect);
+
+            while (rslt.next()) {
+                Country country = new Country();
+                country.code = rslt.getString("country.Code");
+                country.name = rslt.getString("country.Name");
+                country.continent = rslt.getString("country.Continent");
+                country.region = rslt.getString("country.Region");
+                country.surfaceArea = rslt.getDouble("country.SurfaceArea");
+                country.indepYear = rslt.getInt("country.IndepYear");
+                country.population = rslt.getInt("country.Population");
+                country.lifeExpectancy = rslt.getDouble("country.LifeExpectancy");
+                country.gnp = rslt.getDouble("country.GNP");
+                country.gnpOld = rslt.getDouble("country.GNPOld");
+                country.localName = rslt.getString("country.LocalName");
+                country.governmentForm = rslt.getString("country.GovernmentForm");
+                country.headOfState = rslt.getString("country.HeadOfState");
+                country.capital = rslt.getInt("country.Capital");
+                country.code2 = rslt.getString("country.Code2");
+                countries.add(country);
+            }
+
+
+
+            return countries;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting countries from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+    }
+
+    /***
      * Prints a list of countries
      * @param countries the list of countries to be printed
      */
     public  void printCountries(ArrayList<Country> countries){
         //  check if countries is null
         if (countries == null){
-            System.out.println("No cities found");
+            System.out.println("No countries found");
         }
         else{
             //  print header
