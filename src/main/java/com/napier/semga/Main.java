@@ -124,6 +124,19 @@ public class Main
             while (rslt.next()) {
                 Country country = new Country();
                 country.code = rslt.getString("country.Code");
+                country.name = rslt.getString("country.Name");
+                country.continent = rslt.getString("country.Continent");
+                country.surfaceArea = rslt.getDouble("country.SurfaceArea");
+                country.indepYear = rslt.getInt("country.IndepYear");
+                country.population = rslt.getInt("country.Population");
+                country.lifeExpectancy = rslt.getDouble("country.LifeExpectancy");
+                country.gnp = rslt.getDouble("country.GNP");
+                country.gnpOld = rslt.getDouble("country.GNPOld");
+                country.localName = rslt.getString("country.LocalName");
+                country.governmentForm = rslt.getString("country.GovernmentForm");
+                country.headOfState = rslt.getString("country.HeadOfState");
+                country.capital = rslt.getInt("country.Capital");
+                country.code2 = rslt.getString("country.Code2");
                 countries.add(country);
             }
 
