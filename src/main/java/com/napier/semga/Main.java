@@ -126,6 +126,7 @@ public class Main
                 country.code = rslt.getString("country.Code");
                 country.name = rslt.getString("country.Name");
                 country.continent = rslt.getString("country.Continent");
+                country.region = rslt.getString("country.Region");
                 country.surfaceArea = rslt.getDouble("country.SurfaceArea");
                 country.indepYear = rslt.getInt("country.IndepYear");
                 country.population = rslt.getInt("country.Population");
