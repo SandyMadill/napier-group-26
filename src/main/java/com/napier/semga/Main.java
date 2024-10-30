@@ -107,6 +107,40 @@ public class Main
         }
     }
 
+    /****
+     * gets all cities from the database
+     * @return array list containing all cities
+     */
+    public ArrayList<City> getAllCities(){
+        try{
+            ArrayList<City> cities = new ArrayList<City>();
+
+            Statement stmt = con.createStatement();
+
+            String strSelect = "SELECT * FROM city " +
+                    "ORDER BY city.Population DESC";
+
+            ResultSet rslt = stmt.executeQuery(strSelect);
+
+            while (rslt.next()) {
+                City city = new City();
+                city.id = rslt.getInt("ID");
+                city.name = rslt.getString("Name");
+                city.countryCode = rslt.getString("CountryCode");
+                city.district = rslt.getString("District");
+                city.population = rslt.getInt("Population");
+                cities.add(city);
+            }
+
+            return cities;
+        }
+        catch (Exception e){
+            System.out.println("Error getting cities from DB");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     /***
      * gets all the countries from the database
      * @return array list containing countries
