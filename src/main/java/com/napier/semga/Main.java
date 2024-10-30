@@ -16,7 +16,11 @@ public class Main
     {
         Main m = new Main();
 
-        m.connect("localhost:33060", 10000);
+        if (args.length < 1) {
+            m.connect("localhost:33060", 10000);
+        } else {
+            m.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         ArrayList<City> cities = m.getAllCities();
     }
@@ -47,9 +51,10 @@ public class Main
                     Thread.sleep(delay);
                 }
 
+
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location
-                                + "/world?allowPublicKeyRetrieval=true&useSSL=false",
+                                + "/world",
                         "root", "example");
                 System.out.println("Successfully connected");
                 break;
