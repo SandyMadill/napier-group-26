@@ -176,4 +176,33 @@ public class Main
             }
         }
     }
+
+    /***
+     *
+     * Gets all capital Cities from city table
+     */
+
+    public ArrayList<Country> getAllCapitalCities() {
+
+        try {
+            ArrayList<Country> capitialCities = new ArrayList<>();
+            Statement stmt = con.createStatement();
+
+            String strSelectCapitial = "SELECT * FROM city WHERE District='Capital Region'" + " ORDER BY capital DESC";
+            ResultSet rslt = stmt.executeQuery(strSelectCapitial);
+
+            while (rslt.next()) {
+                City city = new City();
+
+
+            }
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting countries from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+        return null;
+    }
+
 }
