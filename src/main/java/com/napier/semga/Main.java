@@ -193,7 +193,10 @@ public class Main
 
             while (rslt.next()) {
                 City city = new City();
-
+                city.id = rslt.getInt("city.id");
+                city.name = rslt.getString("city.name");
+                city.countryCode = rslt.getString("country.Code");
+                city.population = rslt.getInt("city.population");
 
             }
         }
@@ -203,6 +206,29 @@ public class Main
             return null;
         }
         return null;
+    }
+
+    /***
+     *
+     * Prints capitialCities
+     */
+    public void printCapitalCities(ArrayList<City> capitialCities){
+        if (capitialCities == null){
+            System.out.println("No countries found");
+        }
+        // print header
+        else{
+            System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", "city.ID", "Name", "CountryCode", "District", "Population"));
+        }
+        // print Capital Cities
+        for (City city : capitialCities){
+            if (city == null){
+                continue;
+            }
+            else {
+                System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", city.id, city.name, city.countryCode, city.district, city.population));
+            }
+        }
     }
 
 }
