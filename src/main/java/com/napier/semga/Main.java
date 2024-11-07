@@ -3,10 +3,13 @@ package com.napier.semga;
 import java.sql.*;
 import java.util.ArrayList;
 
+/***
+ * the main class of the application
+ */
 public class Main
 {
     /***
-     * currently just connects to the mysql database
+     * functionality changes frequently, depending on what's being implemented at the time
      * @param args
      */
     public static void main(String[] args)
