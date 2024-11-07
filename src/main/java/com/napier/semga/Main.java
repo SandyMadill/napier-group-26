@@ -17,8 +17,6 @@ public class Main
 
         ArrayList<Country> countries = m.getAllCountries();
 
-        ArrayList<City> cities = m.getAllCapitalCities();
-
         m.printCountries(countries);
     }
 
@@ -190,15 +188,15 @@ public class Main
             ArrayList<City> capitialCities = new ArrayList<>();
             Statement stmt = con.createStatement();
 
-            String strSelectCapitial = "SELECT * FROM city WHERE District='Capital Region'" + " ORDER BY capital DESC";
+            String strSelectCapitial = "SELECT * FROM city WHERE District='Capital Region'" + " ORDER BY Population DESC";
             ResultSet rslt = stmt.executeQuery(strSelectCapitial);
 
             while (rslt.next()) {
                 City city = new City();
-                city.id = rslt.getInt("city.id");
-                city.name = rslt.getString("city.name");
-                city.countryCode = rslt.getString("country.Code");
-                city.population = rslt.getInt("city.population");
+                city.id = rslt.getInt("city.Id");
+                city.name = rslt.getString("city.Name");
+                city.countryCode = rslt.getString("city.CountryCode");
+                city.population = rslt.getInt("city.Population");
                 capitialCities.add(city);
 
             }
