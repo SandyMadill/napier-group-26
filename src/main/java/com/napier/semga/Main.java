@@ -213,4 +213,61 @@ public class Main
             }
         }
     }
+
+    /***
+     *
+     * Gets all capital Cities from city table
+     */
+
+    public ArrayList<City> getAllCapitalCities() {
+
+        try {
+            ArrayList<City> capitialCities = new ArrayList<>();
+            Statement stmt = con.createStatement();
+
+            String strSelectCapitial = "SELECT * FROM city WHERE District='Capital Region'" + " ORDER BY Population DESC";
+            ResultSet rslt = stmt.executeQuery(strSelectCapitial);
+
+            while (rslt.next()) {
+                City city = new City();
+                city.id = rslt.getInt("city.Id");
+                city.name = rslt.getString("city.Name");
+                city.countryCode = rslt.getString("city.CountryCode");
+                city.population = rslt.getInt("city.Population");
+                capitialCities.add(city);
+
+            }
+            return capitialCities;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting Capital cities from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+
+    }
+
+    /***
+     *
+     * Prints capitialCities
+     */
+    public void printCapitalCities(ArrayList<City> capitialCities){
+        if (capitialCities == null){
+            System.out.println("No Capital cities found");
+        }
+        // print header
+        else{
+            System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", "city.ID", "Name", "CountryCode", "District", "Population"));
+        }
+        // print Capital Cities
+        for (City city : capitialCities){
+            if (city == null){
+                continue;
+            }
+            else {
+                System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", city.id, city.name, city.countryCode, city.district, city.population));
+            }
+        }
+    }
+
 }
