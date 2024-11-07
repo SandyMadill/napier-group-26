@@ -17,6 +17,8 @@ public class Main
 
         ArrayList<Country> countries = m.getAllCountries();
 
+        ArrayList<City> cities = m.getAllCapitalCities();
+
         m.printCountries(countries);
     }
 
@@ -182,10 +184,10 @@ public class Main
      * Gets all capital Cities from city table
      */
 
-    public ArrayList<Country> getAllCapitalCities() {
+    public ArrayList<City> getAllCapitalCities() {
 
         try {
-            ArrayList<Country> capitialCities = new ArrayList<>();
+            ArrayList<City> capitialCities = new ArrayList<>();
             Statement stmt = con.createStatement();
 
             String strSelectCapitial = "SELECT * FROM city WHERE District='Capital Region'" + " ORDER BY capital DESC";
@@ -197,15 +199,17 @@ public class Main
                 city.name = rslt.getString("city.name");
                 city.countryCode = rslt.getString("country.Code");
                 city.population = rslt.getInt("city.population");
+                capitialCities.add(city);
 
             }
+            return capitialCities;
         }
         catch (SQLException sqle) {
-            System.out.println("Error getting countries from DB");
+            System.out.println("Error getting Capital cities from DB");
             System.out.println(sqle.getMessage());
             return null;
         }
-        return null;
+
     }
 
     /***
@@ -214,7 +218,7 @@ public class Main
      */
     public void printCapitalCities(ArrayList<City> capitialCities){
         if (capitialCities == null){
-            System.out.println("No countries found");
+            System.out.println("No Capital cities found");
         }
         // print header
         else{
