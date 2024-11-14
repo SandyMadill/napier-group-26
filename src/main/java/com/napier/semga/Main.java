@@ -2,6 +2,7 @@ package com.napier.semga;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /***
  * the main class of the application
@@ -269,5 +270,34 @@ public class Main
             }
         }
     }
+
+    /***
+     *
+     * Gets top N user input and filters the country arraylist
+     *
+     * ***/
+
+    public ArrayList<Country> getTopNCountries (int topN) {
+        try{
+            ArrayList<Country> TopNcountries = new ArrayList<>();
+            Statement stmt = con.createStatement();
+            String strSelectTopN = "SELECT TOP %s FROM country ORDER BY Population DESC".format(String.valueOf(topN)); // Format query with topN
+            ResultSet rslt = stmt.executeQuery(strSelectTopN);
+            return TopNcountries;
+        }
+        catch (SQLException sqle)
+            {
+                System.out.println("Error getting Top N from DB");
+                System.out.println(sqle.getMessage());
+                return null;
+        }
+    }
+
+    /***
+     * Get top N user input to filter contries by continent then display results
+     */
+
+
+
 
 }
