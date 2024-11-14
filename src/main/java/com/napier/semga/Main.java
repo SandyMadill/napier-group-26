@@ -18,9 +18,9 @@ public class Main
 
         m.connect();
 
-        ArrayList<Country> countries = m.getCountriesByRegion("Southern and Central Asia");
+        ArrayList<City> cities = m.getCitiesByContinent("Europe");
 
-        m.printCountries(countries);
+        m.printCities(cities);
     }
 
     /**
@@ -283,7 +283,7 @@ public class Main
             String strSelect = "SELECT * FROM country WHERE Continent = ? ORDER BY Population DESC";
             System.out.println(strSelect);
 
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM country WHERE country." + field + " = ? ORDER BY country.Population DESC");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM country WHERE " + field + " = ? ORDER BY country.Population DESC");
             stmt.setString(1, filter);
 
             ResultSet rslt = stmt.executeQuery();
@@ -329,13 +329,10 @@ public class Main
         try{
             ArrayList<City> cities = new ArrayList<City>();
 
-            Statement stmt = con.createStatement();
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM city INNER JOIN country ON city.CountryCode = country.Code WHERE " + field + " = ? ORDER BY city.Population DESC");
+            stmt.setString(1, filter);
 
-            String strSelect = "SELECT * FROM city " +
-                    "WHERE " + field + " = " + filter + " " +
-                    "ORDER BY city.Population DESC";
-
-            ResultSet rslt = stmt.executeQuery(strSelect);
+            ResultSet rslt = stmt.executeQuery();
 
             while (rslt.next()) {
                 City city = new City();
@@ -399,7 +396,7 @@ public class Main
      * @return array list of all the countries of the given continent
      */
     public ArrayList<Country> getCountriesByContinent(String continent){
-        return getCountriesByFilter("Continent", continent);
+        return getCountriesByFilter("country.Continent", continent);
     }
 
     /**
@@ -408,7 +405,16 @@ public class Main
      * @return array list of all the countries of the given region
      */
     public ArrayList<Country> getCountriesByRegion(String region){
-        return getCountriesByFilter("Region", region);
+        return getCountriesByFilter("country.Region", region);
+    }
+
+    /**
+     * Retrieves a list of all cities from a continent that is provided in the parameter
+     * @param continent the continent
+     * @return array list of all the cities of the given continent
+     */
+    public ArrayList<City> getCitiesByContinent(String continent){
+        return getCitiesByFilters("country.Continent", continent);
     }
 
 }
