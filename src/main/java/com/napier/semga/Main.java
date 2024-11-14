@@ -18,7 +18,7 @@ public class Main
 
         m.connect();
 
-        ArrayList<City> cities = m.getCitiesByCountry("CHN");
+        ArrayList<City> cities = m.getCitiesByDistrict("California");
 
         m.printCities(cities);
     }
@@ -96,7 +96,7 @@ public class Main
         }
         else{
             //  print header
-            System.out.println(String.format("%-10s %-20s %-10s %-20s", "Id", "Name", "Country Code", "Population"));
+            System.out.println(String.format("%-10s %-20s %-10s %-20s %-20s", "Id", "Name", "Country Code", "Population", "District"));
 
             //  print cities
             for (City city : cities){
@@ -104,7 +104,7 @@ public class Main
                     continue;
                 }
                 else {
-                    System.out.println(String.format("%-10s %-20s %-10s %-20s", city.id, city.name, city.countryCode, city.population));
+                    System.out.println(String.format("%-10s %-20s %-10s %-20s %-20s", city.id, city.name, city.countryCode, city.population, city.district));
                 }
             }
         }
@@ -433,6 +433,15 @@ public class Main
      */
     public ArrayList<City> getCitiesByCountry(String countryCode){
         return getCitiesByFilters("city.countryCode", countryCode);
+    }
+
+    /**
+     * Retrieves a list of all cities from a district that is provided in the parameter
+     * @param district the district requested
+     * @return array list of all the cities of the given country
+     */
+    public ArrayList<City> getCitiesByDistrict(String district){
+        return getCitiesByFilters("city.District", district);
     }
 
 }
