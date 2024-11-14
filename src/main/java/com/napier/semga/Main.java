@@ -18,7 +18,7 @@ public class Main
 
         m.connect();
 
-        ArrayList<Country> countries = m.getCountriesByContinent("Asia");
+        ArrayList<Country> countries = m.getCountriesByRegion("Southern and Central Asia");
 
         m.printCountries(countries);
     }
@@ -400,6 +400,15 @@ public class Main
      */
     public ArrayList<Country> getCountriesByContinent(String continent){
         return getCountriesByFilter("Continent", continent);
+    }
+
+    /**
+     * Retrieves a list of all countries from a region that is provided in the parameter
+     * @param region the continent
+     * @return array list of all the countries of the given region
+     */
+    public ArrayList<Country> getCountriesByRegion(String region){
+        return getCountriesByFilter("Region", region);
     }
 
 }
