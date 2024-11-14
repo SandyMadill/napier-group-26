@@ -18,7 +18,7 @@ public class Main
 
         m.connect();
 
-        ArrayList<City> cities = m.getCitiesByRegion("Central America");
+        ArrayList<City> cities = m.getCitiesByCountry("CHN");
 
         m.printCities(cities);
     }
@@ -424,6 +424,15 @@ public class Main
      */
     public ArrayList<City> getCitiesByRegion(String region){
         return getCitiesByFilters("country.Region", region);
+    }
+
+    /**
+     * Retrieves a list of all cities from a country that is provided in the parameter using it's country code
+     * @param countryCode the country requested
+     * @return array list of all the cities of the given country
+     */
+    public ArrayList<City> getCitiesByCountry(String countryCode){
+        return getCitiesByFilters("city.countryCode", countryCode);
     }
 
 }
