@@ -18,7 +18,7 @@ public class Main
 
         m.connect();
 
-        ArrayList<City> cities = m.getCitiesByDistrict("California");
+        ArrayList<City> cities = m.getCapitalCitiesByContinent("Europe");
 
         m.printCities(cities);
     }
@@ -363,13 +363,10 @@ public class Main
         try{
             ArrayList<City> cities = new ArrayList<City>();
 
-            Statement stmt = con.createStatement();
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM city INNER JOIN country ON city.CountryCode = country.Code WHERE country.Capital = city.ID AND " + field + " = ? ORDER BY city.Population DESC");
+            stmt.setString(1, filter);
 
-            String strSelect = "SELECT * FROM city " +
-                    "WHERE " + field + " = " + filter + " " +
-                    "ORDER BY city.Population DESC";
-
-            ResultSet rslt = stmt.executeQuery(strSelect);
+            ResultSet rslt = stmt.executeQuery();
 
             while (rslt.next()) {
                 City city = new City();
@@ -443,5 +440,24 @@ public class Main
     public ArrayList<City> getCitiesByDistrict(String district){
         return getCitiesByFilters("city.District", district);
     }
+
+    /**
+     * Retrieves a list of all capital cities from a continent that is provided in the parameter
+     * @param continent the continent
+     * @return array list of all the capital cities of the given continent
+     */
+    public ArrayList<City> getCapitalCitiesByContinent(String continent){
+        return getCapitalCitiesByFilters("country.Continent", continent);
+    }
+
+    /**
+     * Retrieves a list of all capital cities from a region that is provided in the parameter
+     * @param region the region
+     * @return array list of all the capital cities of the given region
+     */
+    public ArrayList<City> getCapitalCitiesByRegion(String region){
+        return getCapitalCitiesByFilters("country.Region", region);
+    }
+
 
 }
