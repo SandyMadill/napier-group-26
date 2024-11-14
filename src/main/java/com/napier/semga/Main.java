@@ -18,7 +18,7 @@ public class Main
 
         m.connect();
 
-        ArrayList<Country> countries = m.getAllCountries();
+        ArrayList<Country> countries = m.getCountriesByContinent("Asia");
 
         m.printCountries(countries);
     }
@@ -268,6 +268,138 @@ public class Main
                 System.out.println(String.format("%-8s %-10s %-10s %-10s %-10s %-5s %-3s %-3s %-7s %-13s %-5s %-3s %-2s", city.id, city.name, city.countryCode, city.district, city.population));
             }
         }
+    }
+
+    /***
+     * Makes a request for a list of countries using a filter provided in the parameter
+     * @param field The field that will be used to filter the query
+     * @param filter The filter
+     * @return array list of the results of the query
+     */
+    public ArrayList<Country> getCountriesByFilter(String field, String filter){
+        try {
+            ArrayList<Country> countries = new ArrayList<Country>();
+
+            String strSelect = "SELECT * FROM country WHERE Continent = ? ORDER BY Population DESC";
+            System.out.println(strSelect);
+
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM country WHERE country." + field + " = ? ORDER BY country.Population DESC");
+            stmt.setString(1, filter);
+
+            ResultSet rslt = stmt.executeQuery();
+
+            while (rslt.next()) {
+                Country country = new Country();
+                country.code = rslt.getString("country.Code");
+                country.name = rslt.getString("country.Name");
+                country.continent = rslt.getString("country.Continent");
+                country.region = rslt.getString("country.Region");
+                country.surfaceArea = rslt.getDouble("country.SurfaceArea");
+                country.indepYear = rslt.getInt("country.IndepYear");
+                country.population = rslt.getInt("country.Population");
+                country.lifeExpectancy = rslt.getDouble("country.LifeExpectancy");
+                country.gnp = rslt.getDouble("country.GNP");
+                country.gnpOld = rslt.getDouble("country.GNPOld");
+                country.localName = rslt.getString("country.LocalName");
+                country.governmentForm = rslt.getString("country.GovernmentForm");
+                country.headOfState = rslt.getString("country.HeadOfState");
+                country.capital = rslt.getInt("country.Capital");
+                country.code2 = rslt.getString("country.Code2");
+                countries.add(country);
+            }
+
+
+
+            return countries;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting countries from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+    }
+
+    /***
+     * Makes a request for a list of cities using a filter provided in the parameter
+     * @param field The field that will be used to filter the query
+     * @param filter The filter
+     * @return array list of the results of the query
+     */
+    public ArrayList<City> getCitiesByFilters(String field, String filter){
+        try{
+            ArrayList<City> cities = new ArrayList<City>();
+
+            Statement stmt = con.createStatement();
+
+            String strSelect = "SELECT * FROM city " +
+                    "WHERE " + field + " = " + filter + " " +
+                    "ORDER BY city.Population DESC";
+
+            ResultSet rslt = stmt.executeQuery(strSelect);
+
+            while (rslt.next()) {
+                City city = new City();
+                city.id = rslt.getInt("ID");
+                city.name = rslt.getString("Name");
+                city.countryCode = rslt.getString("CountryCode");
+                city.district = rslt.getString("District");
+                city.population = rslt.getInt("Population");
+                cities.add(city);
+            }
+
+            return cities;
+        }
+        catch (Exception e){
+            System.out.println("Error getting cities from DB");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /***
+     * Makes a request for a list of capital cities using a filter provided in the parameter
+     * @param field The field that will be used to filter the query
+     * @param filter The filter
+     * @return array list of the results of the query
+     */
+    public ArrayList<City> getCapitalCitiesByFilters(String field, String filter){
+        try{
+            ArrayList<City> cities = new ArrayList<City>();
+
+            Statement stmt = con.createStatement();
+
+            String strSelect = "SELECT * FROM city " +
+                    "WHERE " + field + " = " + filter + " " +
+                    "ORDER BY city.Population DESC";
+
+            ResultSet rslt = stmt.executeQuery(strSelect);
+
+            while (rslt.next()) {
+                City city = new City();
+                city.id = rslt.getInt("ID");
+                city.name = rslt.getString("Name");
+                city.countryCode = rslt.getString("CountryCode");
+                city.district = rslt.getString("District");
+                city.population = rslt.getInt("Population");
+                cities.add(city);
+            }
+
+            return cities;
+        }
+        catch (Exception e){
+            System.out.println("Error getting cities from DB");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves a list of all countries from a continent that is provided in the parameter
+     * @param continent the continent
+     * @return array list of all the countries of the given continent
+     */
+    public ArrayList<Country> getCountriesByContinent(String continent){
+        return getCountriesByFilter("Continent", continent);
     }
 
 }
