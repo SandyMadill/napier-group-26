@@ -280,7 +280,6 @@ public class Main
             ArrayList<Country> countries = new ArrayList<Country>();
 
             String strSelect = "SELECT * FROM country WHERE Continent = ? ORDER BY Population DESC";
-            System.out.println(strSelect);
 
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM country WHERE " + field + " = ? ORDER BY country.Population DESC");
             stmt.setString(1, filter);
