@@ -16,11 +16,9 @@ public class Main
     {
         Main m = new Main();
 
-        m.connect();
+        m.connect("localhost:33060", 10000);
 
-        ArrayList<City> cities = m.getCapitalCitiesByContinent("Europe");
-
-        m.printCities(cities);
+        ArrayList<City> cities = m.getAllCities();
     }
 
     /**
@@ -30,42 +28,43 @@ public class Main
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
-    {
-        try
-        {
+    public void connect(String location, int delay) {
+        try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
+
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
+        boolean shouldWait = false;
+        for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
-                // Wait a bit for db to start
-                Thread.sleep(30000);
+            try {
+                if (shouldWait) {
+                    // Wait a bit for db to start
+                    Thread.sleep(delay);
+                }
+
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location
+                                + "/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            }
-            catch (SQLException sqle)
-            {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+            } catch (SQLException sqle) {
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
+
+                // Let's wait before attempting to reconnect
+                shouldWait = true;
+            } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
+
     /**
      * Disconnect from the MySQL database.
      */
@@ -225,7 +224,7 @@ public class Main
             ArrayList<City> capitialCities = new ArrayList<>();
             Statement stmt = con.createStatement();
 
-            String strSelectCapitial = "SELECT * FROM city WHERE District='Capital Region'" + " ORDER BY Population DESC";
+            String strSelectCapitial = "SELECT * FROM city INNER JOIN country ON city.CountryCode = country.Code WHERE country.Capital = city.ID ORDER BY city.Population DESC";
             ResultSet rslt = stmt.executeQuery(strSelectCapitial);
 
             while (rslt.next()) {
