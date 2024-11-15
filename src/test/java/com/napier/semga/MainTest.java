@@ -1,14 +1,9 @@
-import com.napier.semga.City;
-import com.napier.semga.Country;
-import com.napier.semga.Main;
+package com.napier.semga;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
     static Main main;
