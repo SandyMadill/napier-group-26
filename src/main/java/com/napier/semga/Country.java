@@ -5,7 +5,7 @@ package com.napier.semga;
  */
 public class Country {
     //  properties
-    public String code;
+    public int code;
     public String name;
     public String continent;
     public String region;
