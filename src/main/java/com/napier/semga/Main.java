@@ -465,6 +465,7 @@ public class Main
         }
     }
   
+     /****
      * Makes a request for a list of countries using a filter provided in the parameter
      * @param field The field that will be used to filter the query
      * @param filter The filter
