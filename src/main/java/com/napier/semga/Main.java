@@ -1,5 +1,6 @@
 package com.napier.semga;
 
+import javax.swing.plaf.synth.Region;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -19,9 +20,15 @@ public class Main
         m.connect();
 
         ArrayList<Country> countries = m.getAllCountries();
+        ArrayList<Population> populations = m.getAllCountryPopulation();
+
 
         m.printCountries(countries);
+        m.printPopulation(populations);
+
     }
+
+
 
     /**
      * Connection to MySQL database.
@@ -269,5 +276,192 @@ public class Main
             }
         }
     }
+    /***
+     *
+     * Gets all Population from continent, region and country table
+     * All Countries Population
+     */
 
+    public ArrayList<Population> getAllCountryPopulation() {
+
+        try {
+            ArrayList<Population> CountriesPopulation = new ArrayList<>();
+            Statement stmt = con.createStatement();
+
+            String strSelectPopulation = "SELECT country.name,totalPopulation,cityPopulation,totalPopulation- cityPopulation as nonCityPopulation " +
+                    "from country,(select country.code as code, Population as totalPopulation from country) as r1 join (select countryCode as code,sum(city.Population) " +
+                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code " +
+                    "where country.code=r1.code; ";
+            ResultSet rslt = stmt.executeQuery(strSelectPopulation);
+
+            while (rslt.next()) {
+                Population population = new Population();
+                population.totalPopulation = rslt.getInt("totalPopulation");
+                population.cityPopulation = rslt.getInt("cityPopulation");
+                population.nonCityPopulation = rslt.getInt("nonCityPopulation");
+                population.country = rslt.getString("country.name");
+                population.regions="";
+                population.continents="";
+
+                CountriesPopulation.add(population);
+
+            }
+            return CountriesPopulation;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting Country population from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+
+    }
+
+    /***
+     *
+     * Prints Countries Population
+     */
+    public void printCountriesPopulation(ArrayList<Population> populations){
+        if (populations == null){
+            System.out.println("Sorry, No Population found");
+        }
+        // print header
+        else{
+            System.out.println(String.format(" %-20s %-20s %-20s %-20s", "Countries", "CityPopulation", "NonCitiesPopulation,TotalPopulation"));
+        }
+        // print countries Population
+        assert populations != null;
+        for (Population population : populations){
+            if (population == null){
+                continue;
+            }
+            else {
+                System.out.println(String.format(" %-20s %-20s %-20s %-20s",population.country,population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
+            }
+        }
+    }
+
+    /***
+     * Get all cities and non cities population from the database
+     * All Regions population
+     */
+
+
+    public ArrayList<Population> getAllRegionsPopulation() {
+
+        try {
+            ArrayList<Population> RegionPopulation = new ArrayList<Population>();
+            Statement stmt = con.createStatement();
+
+            String strSelectPopulation = "SELECT country.name,totalPopulation,cityPopulation,totalPopulation- cityPopulation as nonCityPopulation" +
+                    "from country,(select country.code as code, Population as totalPopulation from country) as r1 join (select countryCode as code,sum(city.Population)" +
+                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code" +
+                    "where country.code=r1.code";
+            ResultSet rslt = stmt.executeQuery(strSelectPopulation);
+
+            while (rslt.next()) {
+                Population population = new Population();
+                population.country = rslt.getString("country");
+                population.cityPopulation = rslt.getInt("cityPopulation");
+                population.nonCityPopulation = rslt.getInt("nonCityPopulation");
+                population.totalPopulation = rslt.getInt("totalPopulation");
+
+                RegionPopulation.add(population);
+
+            }
+            return RegionPopulation;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting on country Population from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+
+    }
+
+    /***
+     *
+     * Prints All Region Population
+     */
+    public void printRegionPopulation(ArrayList<Population> populations){
+        if (populations == null){
+            System.out.println("Sorry, No Population found in this Region");
+        }
+        // print header
+        else{
+            System.out.println(String.format(" %-20s %-20s %-20s %-20s %-20s","Region", "Countries", "CityPopulation", "NonCitiesPopulation,TotalPopulation"));
+        }
+        // print countries Population
+        assert populations != null;
+        for (Population population : populations){
+            if (population == null){
+                continue;
+            }
+            else {
+                System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",population.regions,population.country,population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
+            }
+        }
+    }
+
+    /***
+     * Get all cities and non cities population from the database
+     * All Regions population
+     */
+
+
+    public ArrayList<Population> getAllContinentPopulation() {
+
+        try {
+            ArrayList<Population> continentPopulations = new ArrayList<Population>();
+            Statement stmt = con.createStatement();
+
+            String strSelectPopulation = "SELECT country.name,totalPopulation,cityPopulation,totalPopulation- cityPopulation as nonCityPopulation" +
+                    "from country,(select country.code as code, Population as totalPopulation from country) as r1 join (select countryCode as code,sum(city.Population)" +
+                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code" +
+                    "where country.code=r1.code; ";
+            ResultSet rslt = stmt.executeQuery(strSelectPopulation);
+            System.out.println(rslt.next());
+
+            while (rslt.next()) {
+                Population population = new Population();
+                population.regions = rslt.getString("AllRegionsPopulation");
+                population.cityPopulation = rslt.getInt("cityPopulation");
+                population.nonCityPopulation = rslt.getInt("nonCityPopulation");
+                population.totalPopulation = rslt.getInt("totalPopulation");
+
+
+                continentPopulations.add(population);
+
+            }
+            return continentPopulations;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error getting on Region Population from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+
+    }
+
+    /***
+     *
+     * Prints All Continent Population
+     */
+    public void printPopulation(ArrayList<Population> populations){
+        if (populations == null){
+            System.out.println("Sorry, No Population found");
+        }
+        // print header
+        else
+            System.out.println(String.format(" %-20s %-20s %-20s %-20s", "Continent/Region/Country", "CityPopulation", "NonCitiesPopulation", "TotalPopulation"));
+        // print countries Population
+        assert populations != null;
+        for (Population population : populations){
+            if (population == null){
+                continue;
+            }
+            else {
+                System.out.println(String.format("%s %s %s %d %d %d",population.country, population.continents, population.regions, population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
+            }
+        }
+    }
 }
