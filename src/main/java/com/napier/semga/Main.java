@@ -22,7 +22,7 @@ public class Main
             m.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        ArrayList<City> cities = m.getAllCities();
+        System.out.println(m.getLanguagePercentage("Chinese"));
     }
 
     /**
@@ -460,6 +460,34 @@ public class Main
      */
     public ArrayList<City> getCapitalCitiesByRegion(String region){
         return getCapitalCitiesByFilters("country.Region", region);
+    }
+
+    /***
+     * Retrieves the percentage of the population that speaks the language provided in the parameter
+     * @param language
+     * @return
+     */
+    public double getLanguagePercentage(String language){
+        try{
+            double population = 0;
+            double worldPopulation = 0;
+            ArrayList<City> cities = new ArrayList<City>();
+            PreparedStatement stmt = con.prepareStatement("SELECT l.Percentage, c.Population FROM countrylanguage l INNER JOIN country c ON l.CountryCode = c.Code WHERE Language = ?");
+            stmt.setString(1, language);
+            ResultSet rslt = stmt.executeQuery();
+            while (rslt.next()) {
+                population += (rslt.getDouble("Percentage")/100)*rslt.getInt("Population");
+            }
+            Statement stmt2 = con.createStatement();
+            ResultSet rslt2 = stmt.executeQuery("SELECT c.Population FROM country c");
+            while (rslt2.next()) {
+                worldPopulation += rslt2.getInt("Population");
+            }
+            return ((population/worldPopulation)*100);
+        } catch (Exception e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
 
