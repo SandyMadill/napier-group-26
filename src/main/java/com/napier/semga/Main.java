@@ -161,7 +161,7 @@ public class Main
 
             while (rslt.next()) {
                 Country country = new Country();
-                country.code = Integer.parseInt(rslt.getString("country.Code")); /// had to change this line due to error I couldn't resolve
+                country.code = rslt.getString("country.Code"); /// had to change this line due to error I couldn't
                 country.name = rslt.getString("country.Name");
                 country.continent = rslt.getString("country.Continent");
                 country.region = rslt.getString("country.Region");
@@ -286,7 +286,7 @@ public class Main
 
             while (rslt.next()) {
                 Country TopNcountry = new Country();
-                TopNcountry.code = rslt.getInt("countryCode");
+                TopNcountry.code = rslt.getString("countryCode");
                 TopNcountry.continent = rslt.getString("Country.Continent");
                 TopNcountry.name = rslt.getString("Country.Name");
                 TopNcountry.population = rslt.getInt("Country.Population");
