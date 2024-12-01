@@ -1,11 +1,17 @@
 package com.napier.semga;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 /***
  * the main class of the application
  */
+@SpringBootApplication
+@RestController
 public class Main
 {
     /***
@@ -14,25 +20,25 @@ public class Main
      */
     public static void main(String[] args)
     {
-        Main m = new Main();
+
 
         if (args.length < 1) {
-            m.connect("localhost:33060", 10000);
+            connect("localhost:33060", 10000);
         } else {
-            m.connect(args[0], Integer.parseInt(args[1]));
+            connect(args[0], Integer.parseInt(args[1]));
         }
 
-        ArrayList<City> cities = m.getAllCities();
+        SpringApplication.run(Main.class, args);
     }
 
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    private static Connection con = null;
     /**
      * Connect to the MySQL database.
      */
-    public void connect(String location, int delay) {
+    public static void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -73,7 +79,7 @@ public class Main
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect()
+    public static void disconnect()
     {
         if (con != null)
         {
