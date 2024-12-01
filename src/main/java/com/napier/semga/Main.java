@@ -126,7 +126,7 @@ public class Main
      * gets all cities from the database
      * @return array list containing all cities
      */
-    @RequestMapping("cities")
+    @RequestMapping("city")
     public ArrayList<City> getAllCities(){
         try{
             ArrayList<City> cities = new ArrayList<City>();
@@ -161,7 +161,7 @@ public class Main
      * gets all the countries from the database
      * @return array list containing countries
      */
-    @RequestMapping("countries")
+    @RequestMapping("country")
     public ArrayList<Country> getAllCountries(){
         try {
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -232,7 +232,7 @@ public class Main
      *
      * Gets all capital Cities from city table
      */
-    @RequestMapping("capital-cities")
+    @RequestMapping("capital-city")
     public ArrayList<City> getAllCapitalCities() {
 
         try {
@@ -435,7 +435,7 @@ public class Main
      * @param region the region
      * @return array list of all the cities of the given region
      */
-    @RequestMapping("cities-region")
+    @RequestMapping("city-region")
     public ArrayList<City> getCitiesByRegion(@RequestParam(value = "region") String region){
         return getCitiesByFilters("country.Region", region);
     }
@@ -445,7 +445,7 @@ public class Main
      * @param countryCode the country requested
      * @return array list of all the cities of the given country
      */
-    @RequestMapping("cities-country")
+    @RequestMapping("city-country")
     public ArrayList<City> getCitiesByCountry(@RequestParam(value = "countryCode") String countryCode){
         return getCitiesByFilters("city.countryCode", countryCode);
     }
@@ -455,7 +455,7 @@ public class Main
      * @param district the district requested
      * @return array list of all the cities of the given country
      */
-    @RequestMapping("cities-district")
+    @RequestMapping("city-district")
     public ArrayList<City> getCitiesByDistrict(@RequestParam(value = "district") String district){
         return getCitiesByFilters("city.District", district);
     }
@@ -465,7 +465,7 @@ public class Main
      * @param continent the continent
      * @return array list of all the capital cities of the given continent
      */
-    @RequestMapping("capital-cities-continent")
+    @RequestMapping("capital-city-continent")
     public ArrayList<City> getCapitalCitiesByContinent(@RequestParam(value = "continent") String continent){
         return getCapitalCitiesByFilters("country.Continent", continent);
     }
@@ -475,7 +475,7 @@ public class Main
      * @param region the region
      * @return array list of all the capital cities of the given region
      */
-    @RequestMapping("capital-cities-continent")
+    @RequestMapping("capital-city-region")
     public ArrayList<City> getCapitalCitiesByRegion(@RequestParam(value="region") String region){
         return getCapitalCitiesByFilters("country.Region", region);
     }
