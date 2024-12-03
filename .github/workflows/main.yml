@@ -56,4 +56,3 @@ jobs:
         run: |
           mvn package -DskipTests
           docker compose up -d
-          cancel-in-progress: true
