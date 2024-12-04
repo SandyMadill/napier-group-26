@@ -32,16 +32,31 @@
     var params = ""
     var URL = "http://" + window.location.hostname + "/app/country"
 
+    if (urlParams.has("N")){
+        URL += "-top"
+        console.log(urlParams.get('N'))
+        params+=`?N=${urlParams.get('N')}`
+        if (urlParams.get('continent') || urlParams.get('region')){
+            params+='&'
+        }
+    }
+    else {
+        if (urlParams.get('continent') || urlParams.get('region')){
+            params+='?'
+        }
+    }
+
     if(urlParams.has("continent")){
+        params+=`continent=${urlParams.get('continent')}`
         URL += "-continent"
-        params+=`?continent=${urlParams.get('continent')}`
     } else if(urlParams.has("region")){
+        params+=`region=${urlParams.get('region')}`
         URL += "-region"
-        params+=`?region=${urlParams.get('region')}`
     }
 
     URL += params
 
+    console.log(params)
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.

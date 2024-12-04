@@ -2,6 +2,8 @@ package com.napier.semga;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -87,6 +89,10 @@ public class MainTest {
         main.printCountries(countries);
 
     }
+
+
+
+
 
 
 
