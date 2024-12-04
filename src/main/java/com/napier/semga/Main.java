@@ -289,7 +289,7 @@ public class Main
      * Gets all Population from continent, region and country table
      * All Countries Population
      */
-
+    @RequestMapping("population-country")
     public ArrayList<Population> getAllCountryPopulation() {
 
         try {
@@ -304,12 +304,10 @@ public class Main
 
             while (rslt.next()) {
                 Population population = new Population();
-                population.totalPopulation = rslt.getInt("totalPopulation");
-                population.cityPopulation = rslt.getInt("cityPopulation");
-                population.nonCityPopulation = rslt.getInt("nonCityPopulation");
-                population.country = rslt.getString("country.name");
-                population.regions="";
-                population.continents="";
+                population.totalPopulation = rslt.getLong("totalPopulation");
+                population.cityPopulation = rslt.getLong("cityPopulation");
+                population.nonCityPopulation = rslt.getLong("nonCityPopulation");
+                population.name = rslt.getString("country.name");
 
                 CountriesPopulation.add(population);
 
@@ -334,7 +332,7 @@ public class Main
         }
         // print header
         else{
-            System.out.println(String.format(" %-20s %-20s %-20s %-20s", "Countries", "CityPopulation", "NonCitiesPopulation,TotalPopulation"));
+            System.out.println(String.format(" %-20s %-20s %-20s %-20s", "Name", "CityPopulation", "NonCitiesPopulation,TotalPopulation"));
         }
         // print countries Population
         assert populations != null;
@@ -343,7 +341,7 @@ public class Main
                 continue;
             }
             else {
-                System.out.println(String.format(" %-20s %-20s %-20s %-20s",population.country,population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
+                System.out.println(String.format(" %-20s %-20s %-20s %-20s",population.name,population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
             }
         }
     }
@@ -352,28 +350,26 @@ public class Main
      * Get all cities and non cities population from the database
      * All Regions population
      */
-
-
+    @RequestMapping("population-region")
     public ArrayList<Population> getAllRegionsPopulation() {
 
         try {
             ArrayList<Population> RegionPopulation = new ArrayList<Population>();
             Statement stmt = con.createStatement();
 
-            String strSelectPopulation = "SELECT country.name,totalPopulation,cityPopulation,totalPopulation- cityPopulation as nonCityPopulation" +
-                    "from country,(select country.code as code, Population as totalPopulation from country) as r1 join (select countryCode as code,sum(city.Population)" +
-                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code" +
-                    "where country.code=r1.code";
+            String strSelectPopulation = "SELECT country.Region as Region, sum(totalPopulation) as totalPopulation, sum(cityPopulation) as cityPopulation , sum((totalPopulation - cityPopulation)) as nonCityPopulation " +
+                    "from country,(select country.code as code, Population as totalPopulation, Region as Region from country) as r1 join (select countryCode as code,sum(city.Population) " +
+                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code " +
+                    "where country.code=r1.code GROUP BY Region; ";
             ResultSet rslt = stmt.executeQuery(strSelectPopulation);
-
             while (rslt.next()) {
                 Population population = new Population();
-                population.country = rslt.getString("country");
-                population.cityPopulation = rslt.getInt("cityPopulation");
-                population.nonCityPopulation = rslt.getInt("nonCityPopulation");
-                population.totalPopulation = rslt.getInt("totalPopulation");
-
+                population.name = rslt.getString("Region");
+                population.cityPopulation = rslt.getLong("cityPopulation");
+                population.nonCityPopulation = rslt.getLong("nonCityPopulation");
+                population.totalPopulation = rslt.getLong("totalPopulation");
                 RegionPopulation.add(population);
+
 
             }
             return RegionPopulation;
@@ -396,7 +392,7 @@ public class Main
         }
         // print header
         else{
-            System.out.println(String.format(" %-20s %-20s %-20s %-20s %-20s","Region", "Countries", "CityPopulation", "NonCitiesPopulation,TotalPopulation"));
+            System.out.println(String.format("%-20s %-20s %-20s %-20s","Name", "CityPopulation", "NonCitiesPopulation,TotalPopulation"));
         }
         // print countries Population
         assert populations != null;
@@ -405,7 +401,7 @@ public class Main
                 continue;
             }
             else {
-                System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",population.regions,population.country,population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
+                System.out.println(String.format("%-20s %-20s %-20s %-20s",population.name,population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
             }
         }
     }
@@ -414,32 +410,29 @@ public class Main
      * Get all cities and non cities population from the database
      * All Regions population
      */
-
-
+    @RequestMapping("population-continent")
     public ArrayList<Population> getAllContinentPopulation() {
 
         try {
             ArrayList<Population> continentPopulations = new ArrayList<Population>();
             Statement stmt = con.createStatement();
 
-            String strSelectPopulation = "SELECT country.name,totalPopulation,cityPopulation,totalPopulation- cityPopulation as nonCityPopulation" +
-                    "from country,(select country.code as code, Population as totalPopulation from country) as r1 join (select countryCode as code,sum(city.Population)" +
-                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code" +
-                    "where country.code=r1.code; ";
+            String strSelectPopulation = "SELECT country.Continent as Continent, sum(totalPopulation) as totalPopulation, sum(cityPopulation) as cityPopulation , sum((totalPopulation - cityPopulation)) as nonCityPopulation " +
+                    "from country,(select country.code as code, Population as totalPopulation, Continent as Continent from country) as r1 join (select countryCode as code,sum(city.Population) " +
+                    "as cityPopulation from city group by countryCode) as r2 on r1.code=r2.code " +
+                    "where country.code=r1.code GROUP BY Continent; ";
             ResultSet rslt = stmt.executeQuery(strSelectPopulation);
-            System.out.println(rslt.next());
 
             while (rslt.next()) {
                 Population population = new Population();
-                population.regions = rslt.getString("AllRegionsPopulation");
-                population.cityPopulation = rslt.getInt("cityPopulation");
-                population.nonCityPopulation = rslt.getInt("nonCityPopulation");
-                population.totalPopulation = rslt.getInt("totalPopulation");
-
-
+                System.out.println(rslt.getLong("totalPopulation"));
+                population.name = rslt.getString("Continent");
+                population.cityPopulation = rslt.getLong("cityPopulation");
+                population.nonCityPopulation = rslt.getLong("nonCityPopulation");
+                population.totalPopulation = rslt.getLong("totalPopulation");
                 continentPopulations.add(population);
-
             }
+            System.out.println(continentPopulations.size());
             return continentPopulations;
         }
         catch (SQLException sqle) {
@@ -468,7 +461,7 @@ public class Main
                 continue;
             }
             else {
-                System.out.println(String.format("%s %s %s %d %d %d",population.country, population.continents, population.regions, population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
+                System.out.println(String.format("%s %s %s %d %d %d", population.name, population.cityPopulation,  population.nonCityPopulation, population.totalPopulation));
             }
         }
     }
