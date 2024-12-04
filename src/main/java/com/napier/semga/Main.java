@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /***
  * the main class of the application
@@ -479,6 +480,67 @@ public class Main
     public ArrayList<City> getCapitalCitiesByRegion(@RequestParam(value="region") String region){
         return getCapitalCitiesByFilters("country.Region", region);
     }
+
+
+    /***
+     *
+     * Gets top N user input and filters the country arraylist
+     *
+     * ***/
+
+    public ArrayList<Country> getTopNCountries (int topN) {
+        try{
+            ArrayList<Country> TopNcountries = new ArrayList<>();
+            Statement stmt = con.createStatement();
+            String strSelectTopN = "SELECT TOP %s FROM country ORDER BY Population DESC".format(String.valueOf(topN)); // Format query with topN
+            ResultSet rslt = stmt.executeQuery(strSelectTopN);
+
+            while (rslt.next()) {
+                Country TopNcountry = new Country();
+                TopNcountry.code = rslt.getString("countryCode");
+                TopNcountry.continent = rslt.getString("Country.Continent");
+                TopNcountry.name = rslt.getString("Country.Name");
+                TopNcountry.population = rslt.getInt("Country.Population");
+            }
+
+            return TopNcountries;
+
+        }
+        catch (SQLException sqle)
+            {
+                System.out.println("Error getting Top N from DB");
+                System.out.println(sqle.getMessage());
+                return null;
+        }
+    }
+
+    /***
+     * Get top N user input to filter contries by continent then display results
+     */
+
+    public ArrayList<Country> getTopNContinentsCountries (int topNContinents) {
+        try{
+            ArrayList<Country> TopNContinentscountries = new ArrayList<>();
+            Statement stmt = con.createStatement();
+            String strSelectCountryInContinent = "SELECT Name, Population, Continent FROM country ORDER BY Population DESC LIMIT %d", topN;
+            ResultSet rslt = stmt.executeQuery(strSelectCountryInContinent);
+
+            while (rslt.next()) {
+                Country CountryContinent = new Country();
+                CountryContinent.continent = rslt.getString("Continent");
+                CountryContinent.name = rslt.getString("Name");
+                CountryContinent.population = rslt.getInt("Population");
+            }
+
+            return TopNContinentscountries;
+        }
+        catch (SQLException sqle){
+            System.out.println("Error getting Top N from DB");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+    }
+
 
 
 }
