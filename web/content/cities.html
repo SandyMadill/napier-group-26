@@ -32,18 +32,32 @@
     var params = ""
     var URL = "http://" + window.location.hostname + "/app/city"
 
+    if (urlParams.has("N")){
+        URL += "-top"
+        console.log(urlParams.get('N'))
+        params+=`?N=${urlParams.get('N')}`
+        if (urlParams.get('continent') || urlParams.get('region') || urlParams.get('countryCode') || urlParams.get('district')) {
+            params+='&'
+        }
+    }
+    else {
+        if (urlParams.get('continent') || urlParams.get('region') || urlParams.get('countryCode') || urlParams.get('district')){
+            params+='?'
+        }
+    }
+
     if(urlParams.has("continent")){
         URL += "-continent"
-        params+=`?continent=${urlParams.get('continent')}`
+        params+=`continent=${urlParams.get('continent')}`
     } else if(urlParams.has("region")){
         URL += "-region"
-        params+=`?region=${urlParams.get('region')}`
+        params+=`region=${urlParams.get('region')}`
     } else if(urlParams.has("countryCode")){
         URL += "-country"
-        params+=`?countryCode=${urlParams.get('countryCode')}`
+        params+=`countryCode=${urlParams.get('countryCode')}`
     } else if(urlParams.has("district")){
         URL += "-district"
-        params+=`?district=${urlParams.get('district')}`
+        params+=`district=${urlParams.get('district')}`
     }
 
 

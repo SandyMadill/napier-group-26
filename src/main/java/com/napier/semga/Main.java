@@ -28,8 +28,7 @@ public class Main
             connect(args[0], Integer.parseInt(args[1]));
         }
 
-        Main main = new Main();
-        main.printCountries(main.getTopNCountries(10));
+        SpringApplication.run(Main.class, args);
     }
 
 
@@ -676,89 +675,133 @@ public class Main
      * Gets top N user input and filters the country arraylist
      *
      * ***/
-    @RequestMapping("top-countries")
+    @RequestMapping("country-top")
     public ArrayList<Country> getTopNCountries (@RequestParam(value="N") int topN) {
-        return new ArrayList<Country>(getAllCountries().subList(0, topN));
+        try {
+            return new ArrayList<Country>(getAllCountries().subList(0, topN));
+        } catch (IndexOutOfBoundsException e) {
+            return getAllCountries();
+        }
     }
 
     /***
      * Get top N user input to filter contries by continent then display results
      */
-    @RequestMapping("top-countries-continent")
+    @RequestMapping("country-top-continent")
     public ArrayList<Country> getTopNContinentsCountries (@RequestParam(value="N") int topN, @RequestParam(value="continent") String continent) {
-        return new ArrayList<Country>(getCountriesByContinent(continent).subList(0, topN));
+        try{
+            return new ArrayList<Country>(getCountriesByContinent(continent).subList(0, topN));
+        } catch (IndexOutOfBoundsException e) {
+            return getCountriesByContinent(continent);
+        }
     }
 
     /***
      * Get top N user input to filter contries by region then display results
      */
-    @RequestMapping("top-countries-region")
+    @RequestMapping("country-top-region")
     public ArrayList<Country> getTopNCountriesByRegion (@RequestParam(value="N") int topN, @RequestParam(value="region") String region) {
-        return new ArrayList<Country>(getCountriesByRegion(region).subList(0, topN));
+        try {
+            return new ArrayList<Country>(getCountriesByRegion(region).subList(0, topN));
+        } catch (IndexOutOfBoundsException e) {
+            return getCountriesByRegion(region);
+        }
     }
 
     /***
      * Gets top N user input and filters the city arraylist
      */
-    @RequestMapping("top-cities")
+    @RequestMapping("city-top")
     public ArrayList<City> getTopNCities (@RequestParam(value="N") int topN) {
-        return new ArrayList<City>(getAllCities().subList(0, topN));
+            try {
+                return new ArrayList<City>(getAllCities().subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getAllCities();
+            }
     }
 
     /***
      * Get top N user input to filter cities by continent then display results
      */
-    @RequestMapping("top-cities-continent")
+    @RequestMapping("city-top-continent")
     public ArrayList<City> getTopNCitiesByContinent (@RequestParam(value="N") int topN, @RequestParam(value="continent") String continent) {
-        return new ArrayList<City>(getCitiesByContinent(continent).subList(0, topN));
+            try {
+                return new ArrayList<City>(getCitiesByContinent(continent).subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getCitiesByContinent(continent);
+            }
     }
 
     /***
      * Get top N user input to filter cities by region then display results
      */
-    @RequestMapping("top-cities-region")
+    @RequestMapping("city-top-region")
     public ArrayList<City> getTopNCitiesByRegion (@RequestParam(value="N") int topN, @RequestParam(value="region") String region) {
-        return new ArrayList<City>(getCitiesByRegion(region).subList(0, topN));
+            try {
+                return new ArrayList<City>(getCitiesByRegion(region).subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getCitiesByRegion(region);
+            }
     }
 
     /***
      * Get top N user input to filter cities by country code then display results
      */
-    @RequestMapping("top-cities-country")
+    @RequestMapping("city-top-country")
     public ArrayList<City> getTopNCitiesByCountry (@RequestParam(value="N") int topN, @RequestParam(value="countryCode") String countryCode) {
-        return new ArrayList<City>(getCitiesByCountry(countryCode).subList(0, topN));
+            try {
+                return new ArrayList<City>(getCitiesByCountry(countryCode).subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getCitiesByCountry(countryCode);
+            }
     }
 
     /***
      * Get top N user input to filter cities by district then display results
      */
-    @RequestMapping("top-cities-district")
+    @RequestMapping("city-top-district")
     public ArrayList<City> getTopNCitiesByDistrict (@RequestParam(value="N") int topN, @RequestParam(value="district") String district) {
-        return new ArrayList<City>(getCitiesByDistrict(district).subList(0, topN));
+            try {
+                return new ArrayList<City>(getCitiesByDistrict(district).subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getCitiesByDistrict(district);
+            }
     }
 
     /***
      * Gets top N user input and filters the capital city arraylist
      */
-    @RequestMapping("top-cities")
+    @RequestMapping("capital-city-top")
     public ArrayList<City> getTopNCapitalCities (@RequestParam(value="N") int topN) {
-        return new ArrayList<City>(getAllCapitalCities().subList(0, topN));
+            try {
+                return new ArrayList<City>(getAllCapitalCities().subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getAllCapitalCities();
+            }
     }
 
     /***
      * Get top N user input to filter  capital cities by continent then display results
      */
-    @RequestMapping("top-capital-cities-continent")
+    @RequestMapping("capital-city-top-continent")
     public ArrayList<City> getTopNCapitalCitiesByContinent (@RequestParam(value="N") int topN, @RequestParam(value="continent") String continent) {
-        return new ArrayList<City>(getCapitalCitiesByContinent(continent).subList(0, topN));
+            try {
+                return new ArrayList<City>(getCapitalCitiesByContinent(continent).subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getCapitalCitiesByContinent(continent);
+            }
     }
 
     /***
      * Get top N user input to filter capital cities by region then display results
      */
-    @RequestMapping("top-capital-cities-region")
+    @RequestMapping("capital-city-top-region")
     public ArrayList<City> getTopNCapitalCitiesByRegion (@RequestParam(value="N") int topN, @RequestParam(value="region") String region) {
-        return new ArrayList<City>(getCapitalCitiesByRegion(region).subList(0, topN));
+            try {
+                return new ArrayList<City>(getCapitalCitiesByRegion(region).subList(0, topN));
+            } catch (IndexOutOfBoundsException e) {
+                return getCapitalCitiesByRegion(region);
+            }
     }
 
 
