@@ -66,7 +66,7 @@ public class MainTest {
     void printCountries(){
         ArrayList<Country> countries = new ArrayList<>();
         Country country = new Country();
-        country.code = "ABW";
+        country.code = ("ABW");
         country.name = "Aruba";
         country.continent = "North America";
         country.region = "Caribbean";
