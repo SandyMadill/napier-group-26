@@ -1,12 +1,18 @@
 package com.napier.semga;
 
-import javax.swing.plaf.synth.Region;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
 import java.util.ArrayList;
 
 /***
  * the main class of the application
  */
+@SpringBootApplication
+@RestController
 public class Main
 {
     /***
@@ -15,15 +21,13 @@ public class Main
      */
     public static void main(String[] args)
     {
-        Main m = new Main();
-      
         if (args.length < 1) {
-            m.connect("localhost:33060", 10000);
+            connect("localhost:33060", 10000);
         } else {
-            m.connect(args[0], Integer.parseInt(args[1]));
+            connect(args[0], Integer.parseInt(args[1]));
         }
 
-        ArrayList<City> cities = m.getAllCities();
+        SpringApplication.run(Main.class, args);
     }
 
 
@@ -31,11 +35,11 @@ public class Main
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    private static Connection con = null;
     /**
      * Connect to the MySQL database.
      */
-    public void connect(String location, int delay) {
+    public static void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -76,7 +80,7 @@ public class Main
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect()
+    public static void disconnect()
     {
         if (con != null)
         {
@@ -121,6 +125,7 @@ public class Main
      * gets all cities from the database
      * @return array list containing all cities
      */
+    @RequestMapping("city")
     public ArrayList<City> getAllCities(){
         try{
             ArrayList<City> cities = new ArrayList<City>();
@@ -155,6 +160,7 @@ public class Main
      * gets all the countries from the database
      * @return array list containing countries
      */
+    @RequestMapping("country")
     public ArrayList<Country> getAllCountries(){
         try {
             ArrayList<Country> countries = new ArrayList<Country>();
@@ -225,7 +231,7 @@ public class Main
      *
      * Gets all capital Cities from city table
      */
-
+    @RequestMapping("capital-city")
     public ArrayList<City> getAllCapitalCities() {
 
         try {
@@ -586,7 +592,8 @@ public class Main
      * @param continent the continent
      * @return array list of all the countries of the given continent
      */
-    public ArrayList<Country> getCountriesByContinent(String continent){
+    @RequestMapping("country-continent")
+    public ArrayList<Country> getCountriesByContinent(@RequestParam(value = "continent") String continent){
         return getCountriesByFilter("country.Continent", continent);
     }
 
@@ -595,7 +602,8 @@ public class Main
      * @param region the continent
      * @return array list of all the countries of the given region
      */
-    public ArrayList<Country> getCountriesByRegion(String region){
+    @RequestMapping("country-region")
+    public ArrayList<Country> getCountriesByRegion(@RequestParam(value = "region") String region){
         return getCountriesByFilter("country.Region", region);
     }
 
@@ -604,7 +612,8 @@ public class Main
      * @param continent the continent
      * @return array list of all the cities of the given continent
      */
-    public ArrayList<City> getCitiesByContinent(String continent){
+    @RequestMapping("city-continent")
+    public ArrayList<City> getCitiesByContinent(@RequestParam(value = "continent") String continent){
         return getCitiesByFilters("country.Continent", continent);
     }
 
@@ -613,7 +622,8 @@ public class Main
      * @param region the region
      * @return array list of all the cities of the given region
      */
-    public ArrayList<City> getCitiesByRegion(String region){
+    @RequestMapping("city-region")
+    public ArrayList<City> getCitiesByRegion(@RequestParam(value = "region") String region){
         return getCitiesByFilters("country.Region", region);
     }
 
@@ -622,7 +632,8 @@ public class Main
      * @param countryCode the country requested
      * @return array list of all the cities of the given country
      */
-    public ArrayList<City> getCitiesByCountry(String countryCode){
+    @RequestMapping("city-country")
+    public ArrayList<City> getCitiesByCountry(@RequestParam(value = "countryCode") String countryCode){
         return getCitiesByFilters("city.countryCode", countryCode);
     }
 
@@ -631,7 +642,8 @@ public class Main
      * @param district the district requested
      * @return array list of all the cities of the given country
      */
-    public ArrayList<City> getCitiesByDistrict(String district){
+    @RequestMapping("city-district")
+    public ArrayList<City> getCitiesByDistrict(@RequestParam(value = "district") String district){
         return getCitiesByFilters("city.District", district);
     }
 
@@ -640,7 +652,8 @@ public class Main
      * @param continent the continent
      * @return array list of all the capital cities of the given continent
      */
-    public ArrayList<City> getCapitalCitiesByContinent(String continent){
+    @RequestMapping("capital-city-continent")
+    public ArrayList<City> getCapitalCitiesByContinent(@RequestParam(value = "continent") String continent){
         return getCapitalCitiesByFilters("country.Continent", continent);
     }
 
@@ -649,7 +662,8 @@ public class Main
      * @param region the region
      * @return array list of all the capital cities of the given region
      */
-    public ArrayList<City> getCapitalCitiesByRegion(String region){
+    @RequestMapping("capital-city-region")
+    public ArrayList<City> getCapitalCitiesByRegion(@RequestParam(value="region") String region){
         return getCapitalCitiesByFilters("country.Region", region);
     }
 

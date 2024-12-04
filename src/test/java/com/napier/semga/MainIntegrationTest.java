@@ -13,7 +13,7 @@ public class MainIntegrationTest {
     @BeforeAll
     static void init(){
         main = new Main();
-        main.connect("localhost:33060", 30000);
+        Main.connect("localhost:33060", 30000);
     }
 
     @Test
