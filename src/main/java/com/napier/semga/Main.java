@@ -22,15 +22,14 @@ public class Main
      */
     public static void main(String[] args)
     {
-
-
         if (args.length < 1) {
             connect("localhost:33060", 10000);
         } else {
             connect(args[0], Integer.parseInt(args[1]));
         }
 
-        SpringApplication.run(Main.class, args);
+        Main main = new Main();
+        main.printCountries(main.getTopNCountries(10));
     }
 
 
@@ -677,59 +676,91 @@ public class Main
      * Gets top N user input and filters the country arraylist
      *
      * ***/
-
-    public ArrayList<Country> getTopNCountries (int topN) {
-        try{
-            ArrayList<Country> TopNcountries = new ArrayList<>();
-            Statement stmt = con.createStatement();
-            String strSelectTopN = "SELECT TOP %s FROM country ORDER BY Population DESC".format(String.valueOf(topN)); // Format query with topN
-            ResultSet rslt = stmt.executeQuery(strSelectTopN);
-
-            while (rslt.next()) {
-                Country TopNcountry = new Country();
-                TopNcountry.code = rslt.getString("countryCode");
-                TopNcountry.continent = rslt.getString("Country.Continent");
-                TopNcountry.name = rslt.getString("Country.Name");
-                TopNcountry.population = rslt.getInt("Country.Population");
-            }
-
-            return TopNcountries;
-
-        }
-        catch (SQLException sqle)
-            {
-                System.out.println("Error getting Top N from DB");
-                System.out.println(sqle.getMessage());
-                return null;
-        }
+    @RequestMapping("top-countries")
+    public ArrayList<Country> getTopNCountries (@RequestParam(value="N") int topN) {
+        return new ArrayList<Country>(getAllCountries().subList(0, topN));
     }
 
     /***
      * Get top N user input to filter contries by continent then display results
      */
-
-    public ArrayList<Country> getTopNContinentsCountries (int topNContinents) {
-        try{
-            ArrayList<Country> TopNContinentscountries = new ArrayList<>();
-            Statement stmt = con.createStatement();
-            String strSelectCountryInContinent = "SELECT Name, Population, Continent FROM country ORDER BY Population DESC LIMIT %d", topN;
-            ResultSet rslt = stmt.executeQuery(strSelectCountryInContinent);
-
-            while (rslt.next()) {
-                Country CountryContinent = new Country();
-                CountryContinent.continent = rslt.getString("Continent");
-                CountryContinent.name = rslt.getString("Name");
-                CountryContinent.population = rslt.getInt("Population");
-            }
-
-            return TopNContinentscountries;
-        }
-        catch (SQLException sqle){
-            System.out.println("Error getting Top N from DB");
-            System.out.println(sqle.getMessage());
-            return null;
-        }
+    @RequestMapping("top-countries-continent")
+    public ArrayList<Country> getTopNContinentsCountries (@RequestParam(value="N") int topN, @RequestParam(value="continent") String continent) {
+        return new ArrayList<Country>(getCountriesByContinent(continent).subList(0, topN));
     }
+
+    /***
+     * Get top N user input to filter contries by region then display results
+     */
+    @RequestMapping("top-countries-region")
+    public ArrayList<Country> getTopNCountriesByRegion (@RequestParam(value="N") int topN, @RequestParam(value="region") String region) {
+        return new ArrayList<Country>(getCountriesByRegion(region).subList(0, topN));
+    }
+
+    /***
+     * Gets top N user input and filters the city arraylist
+     */
+    @RequestMapping("top-cities")
+    public ArrayList<City> getTopNCities (@RequestParam(value="N") int topN) {
+        return new ArrayList<City>(getAllCities().subList(0, topN));
+    }
+
+    /***
+     * Get top N user input to filter cities by continent then display results
+     */
+    @RequestMapping("top-cities-continent")
+    public ArrayList<City> getTopNCitiesByContinent (@RequestParam(value="N") int topN, @RequestParam(value="continent") String continent) {
+        return new ArrayList<City>(getCitiesByContinent(continent).subList(0, topN));
+    }
+
+    /***
+     * Get top N user input to filter cities by region then display results
+     */
+    @RequestMapping("top-cities-region")
+    public ArrayList<City> getTopNCitiesByRegion (@RequestParam(value="N") int topN, @RequestParam(value="region") String region) {
+        return new ArrayList<City>(getCitiesByRegion(region).subList(0, topN));
+    }
+
+    /***
+     * Get top N user input to filter cities by country code then display results
+     */
+    @RequestMapping("top-cities-country")
+    public ArrayList<City> getTopNCitiesByCountry (@RequestParam(value="N") int topN, @RequestParam(value="countryCode") String countryCode) {
+        return new ArrayList<City>(getCitiesByCountry(countryCode).subList(0, topN));
+    }
+
+    /***
+     * Get top N user input to filter cities by district then display results
+     */
+    @RequestMapping("top-cities-district")
+    public ArrayList<City> getTopNCitiesByDistrict (@RequestParam(value="N") int topN, @RequestParam(value="district") String district) {
+        return new ArrayList<City>(getCitiesByDistrict(district).subList(0, topN));
+    }
+
+    /***
+     * Gets top N user input and filters the capital city arraylist
+     */
+    @RequestMapping("top-cities")
+    public ArrayList<City> getTopNCapitalCities (@RequestParam(value="N") int topN) {
+        return new ArrayList<City>(getAllCapitalCities().subList(0, topN));
+    }
+
+    /***
+     * Get top N user input to filter  capital cities by continent then display results
+     */
+    @RequestMapping("top-capital-cities-continent")
+    public ArrayList<City> getTopNCapitalCitiesByContinent (@RequestParam(value="N") int topN, @RequestParam(value="continent") String continent) {
+        return new ArrayList<City>(getCapitalCitiesByContinent(continent).subList(0, topN));
+    }
+
+    /***
+     * Get top N user input to filter capital cities by region then display results
+     */
+    @RequestMapping("top-capital-cities-region")
+    public ArrayList<City> getTopNCapitalCitiesByRegion (@RequestParam(value="N") int topN, @RequestParam(value="region") String region) {
+        return new ArrayList<City>(getCapitalCitiesByRegion(region).subList(0, topN));
+    }
+
 
 
 
