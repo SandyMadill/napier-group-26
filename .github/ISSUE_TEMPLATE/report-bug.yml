@@ -4,7 +4,7 @@ title: "[Bug]: "
 labels: ["bug", "triage"]
 projects: ["SandyMadill/napier-group-26"]
 assignees:
-  - octocat
+  - SandyMadill
 body:
   - type: markdown
     attributes:
