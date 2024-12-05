@@ -9,3 +9,8 @@ services:
     restart: always
     ports:
       - "33060:3306"
+
+  web:
+    build: web/.
+    ports:
+      - "80:80"

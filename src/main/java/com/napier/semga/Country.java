@@ -5,7 +5,7 @@ package com.napier.semga;
  */
 public class Country {
     //  properties
-    public String code;
+    public String code; // Had to change variable type to string since int wasnt compatable
     public String name;
     public String continent;
     public String region;
@@ -20,4 +20,5 @@ public class Country {
     public String headOfState;
     public int capital;
     public String code2;
+
 }
