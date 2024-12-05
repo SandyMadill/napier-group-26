@@ -61,7 +61,3 @@ body:
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-
-
-**Additional context**
-Add any other context about the problem here.
