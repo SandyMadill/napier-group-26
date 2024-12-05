@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language Percentage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div id="showData">Waiting</div>
+</body>
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var URL = "http://" + window.location.hostname + "/app/language"
+    if (urlParams.has("language")){
+        URL+=`?language=${urlParams.get('language')}`
+        $.getJSON(URL, function(data) {
+            // EXTRACT VALUE FOR HTML HEADER.
+            document.getElementById("showData").innerHTML=`${data.toFixed(1)}% of the population speak ${urlParams.get('language')}`
+        });
+    }
+</script>
+</html>

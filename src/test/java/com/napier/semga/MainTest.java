@@ -2,6 +2,8 @@ package com.napier.semga;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -66,7 +68,7 @@ public class MainTest {
     void printCountries(){
         ArrayList<Country> countries = new ArrayList<>();
         Country country = new Country();
-        country.code = "ABW";
+        country.code = ("ABW");
         country.name = "Aruba";
         country.continent = "North America";
         country.region = "Caribbean";
@@ -87,6 +89,10 @@ public class MainTest {
         main.printCountries(countries);
 
     }
+
+
+
+
 
 
 
