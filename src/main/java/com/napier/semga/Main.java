@@ -666,7 +666,8 @@ public class Main
      * @param language
      * @return
      */
-    public double getLanguagePercentage(String language){
+    @RequestMapping("language")
+    public double getLanguagePercentage(@RequestParam String language){
         try{
             double population = 0;
             double worldPopulation = 0;
